@@ -1,0 +1,249 @@
+/* styles */
+/* called by your view template */
+
+* {
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+}
+
+html {
+  width:100%;
+}
+
+body {
+  font-family: "Benton Sans", "Helvetica Neue", helvetica, arial, sans-serif;
+  background: #000;
+  font-size: 16px;
+  width:100%;
+  margin:0;
+}
+
+#top{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+}
+
+form {
+  width: 95%;
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #333;
+  display: inline-block;
+  border-radius: 3px;
+}
+
+input {
+  display: block;
+  padding: 10px;
+  width: 90%;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+  background: #000;
+  color: #fff;
+  font-size: 16px;
+  float: left;
+  border-top-right-radius:0;
+  border-bottom-right-radius:0;
+  border-right:0;
+}
+
+form button {
+  font-size: 16px;
+  border-radius: 3px;
+  background-color: #000;
+  color: #fff;
+  border: 1px solid lightgrey;
+  padding: 10px;
+  cursor: pointer;
+  display: block;
+  width: 10%;
+  border-top-left-radius:0;
+  border-bottom-left-radius:0;
+  font-family: 'Permanent Marker';
+  font-size: 150%;
+  line-height:18px;
+  color: #a7f542;
+}
+
+button:hover {
+  background-color: #333;
+}
+
+button:active {
+  box-shadow: none;
+}
+
+div.item {
+  display: block;
+  color: #fff;
+  border-top: 1px solid #444;
+  padding: 10px;
+  margin-top: 10px;
+  position: relative;
+  font-size: 24px;
+  font-family: 'Permanent Marker';
+}
+
+div.item:first {
+  border-top: none;
+}
+
+div.item > button {
+  display: block;
+  position: absolute;
+  right: 20px;
+  top: 4px;
+  background: #000;
+  border:none;
+  color: #a7f542;
+  padding: 15px;
+  cursor: pointer;
+}
+
+div.item.filtered,
+div.item.hidden{
+  display:none;
+}
+
+#frequent {
+  margin-bottom: 10px;
+}
+
+#frequent > .item{
+  float: left;
+  border: 1px solid #333;
+  border-radius: 10px;
+  margin: 10px 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+  -webkit-touch-callout:none;
+  -webkit-user-select:none;
+  -khtml-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+#frequent > .item:hover {
+  background: #333;
+}
+
+#frequent > .item:before{
+  content: "+";
+  color: #a7f542;
+  margin-right: 5px;
+}
+
+#listwrapper{
+  margin-top:145px;
+  overflow-y: scroll;
+}
+
+#list {
+  overflow: show;
+}
+
+#frequent-wrapper{
+  width:100%;
+  overflow-x: scroll;
+  -ms-overflow-style: none; /* IE 11 */
+  scrollbar-width: none; /* Firefox 64 */
+}
+
+#frequent {
+  width: 10000px;
+}
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    height: 0;
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+
+#keyboard {
+  margin: 0;
+  padding: 10px;
+  list-style: none;
+  position:fixed;
+  bottom:0;
+  padding-bottom:10px;
+  background: #333;
+  width:100%;
+  left:0;
+}
+#keyboard li {
+  float: left;
+  margin: 0 5px 5px 0;
+  width: 37px;
+  height: 33px;
+  line-height: 33px;
+  text-align: center;
+  background: #777;
+  border: 1px solid #888;
+  border-radius:5px;
+  color:#f8f8f8;
+  box-shadow: 0 2px 0 #000;
+}
+.firstitem {
+  clear: left;
+}
+#keyboard li.a{
+  margin-left: 15px;
+}
+#keyboard li.return {
+  line-height:28px;
+  width: 63px;
+  font-family: 'Permanent Marker';
+  font-size: 150%;
+  color: #a7f542;
+  background: #000;
+}
+#keyboard .icon {
+  line-height:30px;
+}
+#keyboard .delete,
+#keyboard .return,
+#keyboard .left-shift,
+#keyboard .space,
+#keyboard .clear,
+#keyboard .refresh,
+#keyboard .hide {
+  background: #82916e;
+}
+.lastitem {
+  margin-right: 0;
+}
+.uppercase {
+  text-transform: uppercase;
+}
+#keyboard .space {
+  width: 373px;
+}
+.on {
+  display: none;
+}
+#keyboard li:hover {
+  position: relative;
+  top: 1px;
+  left: 1px;
+  border-color: #e5e5e5;
+  cursor: pointer;
+}
+#show-keyboard {
+  cursor: pointer;
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 45%;
+  width: 37px;
+  height: 33px;
+  line-height: 33px;
+  text-align: center;
+  background: #999;
+  border: 1px solid #888;
+  border-top-right-radius:5px;
+  border-top-left-radius:5px;
+  color:#f8f8f8;
+}

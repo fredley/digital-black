@@ -1,0 +1,103 @@
+<!-- This is a static file -->
+<!-- served from your routes in server.js -->
+
+<!-- You might want to try something fancier: -->
+<!-- html/nunjucks docs: https://mozilla.github.io/nunjucks/ -->
+<!-- pug: https://pugjs.org/ -->
+<!-- haml: http://haml.info/ -->
+<!-- hbs(handlebars): http://handlebarsjs.com/ -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Welcome to Glitch!</title>
+    <meta name="description" content="A cool thing made with Glitch">
+    <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- import the webpage's stylesheet -->
+    <link href="https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css" />
+    <link rel="stylesheet" href="/style.css">
+    
+    <!-- import the webpage's client-side javascript file -->
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+    <script src="/client.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <div id="top">
+        <form>
+          <input id="input" type="text" maxlength="100" placeholder="Milk" aria-labelledby="submit">
+          <button type="button" id="submit">+</button>
+        </form>
+        <div id="frequent-wrapper">
+        <div id="frequent"></div>
+        </div>
+      </div>
+      <div id="listwrapper">
+        <div id="list"></div>
+      </div>
+      <div id="kbox">
+      <ul id="keyboard">
+        <li class="letter"><span class="off">1</span><span class="on">!</span></li>
+        <li class="letter"><span class="off">2</span><span class="on">@</span></li>
+        <li class="letter"><span class="off">3</span><span class="on">#</span></li>
+        <li class="letter"><span class="off">4</span><span class="on">$</span></li>
+        <li class="letter"><span class="off">5</span><span class="on">%</span></li>
+        <li class="letter"><span class="off">6</span><span class="on">^</span></li>
+        <li class="letter"><span class="off">7</span><span class="on">&amp;</span></li>
+        <li class="letter"><span class="off">8</span><span class="on">*</span></li>
+        <li class="letter"><span class="off">9</span><span class="on">(</span></li>
+        <li class="letter"><span class="off">0</span><span class="on">)</span></li>
+        <li class="delete lastitem icon"><i class="fa fa-backspace"></i></li>
+        <li class="letter firstitem q">q</li>
+        <li class="letter">w</li>
+        <li class="letter">e</li>
+        <li class="letter">r</li>
+        <li class="letter">t</li>
+        <li class="letter">y</li>
+        <li class="letter">u</li>
+        <li class="letter">i</li>
+        <li class="letter">o</li>
+        <li class="letter">p</li>
+        <li class="letter lastitem"><span class="off">+</span><span class="on">|</span></li>
+        <li class="letter firstitem a">a</li>
+        <li class="letter">s</li>
+        <li class="letter">d</li>
+        <li class="letter">f</li>
+        <li class="letter">g</li>
+        <li class="letter">h</li>
+        <li class="letter">j</li>
+        <li class="letter">k</li>
+        <li class="letter">l</li>
+        <li class="return lastitem icon">+</li>
+        <li class="left-shift firstitem">	&#x2B06;</li>
+        <li class="letter">z</li>
+        <li class="letter">x</li>
+        <li class="letter">c</li>
+        <li class="letter">v</li>
+        <li class="letter">b</li>
+        <li class="letter">n</li>
+        <li class="letter">m</li>
+        <li class="letter"><span class="off">,</span><span class="on">&lt;</span></li>
+        <li class="letter"><span class="off">.</span><span class="on">&gt;</span></li>
+        <li class="hide lastitem icon"><i class="far fa-keyboard"></i></li>
+        <li class="refresh firstitem icon"><i class="fa fa-sync"></i></li>
+        <li class="space"></li>
+        <li class="clear lastitem icon"><i class="fa fa-check-double"></i></li>
+    </ul>
+      </div>
+      <div id="show-keyboard">
+        <i class="far fa-keyboard"></i>
+      </div>
+    </main>
+
+  </body>
+</html>
