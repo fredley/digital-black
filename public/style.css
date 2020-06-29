@@ -167,7 +167,7 @@ div.item.hidden{
   padding: 10px;
   list-style: none;
   position:fixed;
-  bottom:0;
+  bottom:-210px;
   padding-bottom:10px;
   background: #333;
   width:100%;
@@ -233,7 +233,7 @@ div.item.hidden{
 }
 #show-keyboard {
   cursor: pointer;
-  display: none;
+  display: block;
   position: fixed;
   bottom: 0;
   right: 45%;

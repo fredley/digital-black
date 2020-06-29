@@ -240,10 +240,8 @@ $(document).ready(() => {
   })
 
   if(navigator.userAgent.toLowerCase().indexOf("raspbian") >= 0){
-    $("#keyboard").show()
+    $('#show-keyboard').click()
     $("#banner").show()
-  }else{
-    $("#keyboard .hide").click()
   }
 
 })
