@@ -213,7 +213,7 @@ $(document).ready(() => {
   })
 
   $('#keyboard .refresh').on('click', function(){
-    refresh_items()
+    location.reload()
   })
 
   $('#keyboard .clear').on('click', function(){
