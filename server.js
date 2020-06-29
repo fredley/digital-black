@@ -1,21 +1,12 @@
-// server.js
-// where your node app starts
-
-// init project
 var express = require('express');
 var bodyParser = require('body-parser');
+
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// we've started you off with Express, 
-// but feel free to use whatever libs or frameworks you'd like through `package.json`.
-
-// http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
 
-// init sqlite db
 var fs = require('fs');
-var dbFile = './.data/items.sqlite';
+var dbFile = process.env.DB_PATH || 'items.sqlite';
 var exists = fs.existsSync(dbFile);
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database(dbFile);
@@ -23,11 +14,10 @@ var bodyParser = require('body-parser');
 
 const AUTH_KEY = 'bevenden'
 
-app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+app.use(bodyParser.urlencoded({
   extended: true
-})); 
+}));
 
-// if ./.data/sqlite.db does not exist, create it, otherwise print records to console
 db.serialize(function(){
   if (!exists) {
     db.run('CREATE TABLE items (item TEXT)');
@@ -104,7 +94,6 @@ app.post('/clear_item/:id/', function(request, response) {
   }).finalize()
 });
 
-// listen for requests :)
 var listener = app.listen(process.env.PORT, function() {
   console.log('Your app is listening on port ' + listener.address().port);
 });

@@ -1,0 +1,15 @@
+[Unit]
+Description=black
+After=network.target
+
+[Service]
+WorkingDirectory=/home/ubuntu/digital-black
+Environment=PORT=3001
+Environment=DB_PATH=/home/ubuntu/digital-black/items.sql
+Type=simple
+User=ubuntu
+ExecStart=/usr/bin/node server.js
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

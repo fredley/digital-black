@@ -4,16 +4,19 @@ let items = []
 const wire_remove = () => {
   $('.remove').off().on('click', function(){
     const el = $(this).parent()
+    const id = el.attr('data-id')
+    const name = el.contents().get(0).nodeValue
     $.ajax({
-      url: `/clear_item/${el.attr('data-id')}/`,
+      url: `/clear_item/${id}/`,
       method: 'POST',
       data: {
         auth_key: auth_key
       },
       success: () => {
         el.slideUp('fast')
+        items = items.filter(i => i.name !== name)
         reflow_list()
-        $(`#frequent .item[data-name="${el.contents().get(0).nodeValue}"]`).show()
+        $(`#frequent .item[data-name="${name}"]`).show()
       }
     })
   })
@@ -91,7 +94,9 @@ const add_item = (name, cb) => {
         wire_remove()
         reflow_list()
         $('#input').val('')
-        items.push(name)
+        items.push({name: name})
+        console.log('reset frequ')
+        reset_frequent()
         cb && cb()
       }
     })
@@ -118,7 +123,7 @@ const refresh_items = () => {
       $('#list').html("")
       items = data.items
       frequent_items = data.frequent
-      
+
       items.forEach(item => {
         $('#list').append(`<div data-id="${item.id}" class="item">${item.name}<button class='remove'><i class="fa fa-2x fa-check"></i></button></div>`)
       })
@@ -147,10 +152,10 @@ $(document).ready(() => {
   if(!auth_key){
     auth_key = prompt("Password:")
   }
-  
+
   refresh_items()
   setInterval(refresh_items, 60000)
-  
+
   $('#input').on('keypress', (event) => {
     if ((event.keyCode ? event.keyCode : event.which) === 13){
       $('#submit').click();
@@ -160,11 +165,11 @@ $(document).ready(() => {
     const value = $('#input').val().toLowerCase()
     display_frequent_with_filter(value)
   })
-  
+
   $('#submit').on('click', () => {
     add_item($('#input').val())
   })
-  
+
   const add_letter = (char) => {
     const event = $.Event("keypress")
     event.which = char.charCodeAt(0)
@@ -173,7 +178,7 @@ $(document).ready(() => {
 	  $('#input').trigger(event)
     $('#input').trigger($.Event("input"))
   }
-  
+
   $('#keyboard .letter').on('click', function(){
     let char
     if ($(this).children().length){
@@ -183,15 +188,15 @@ $(document).ready(() => {
     }
     add_letter(char)
   })
-  
+
   $('#keyboard .space').on('click', function(){
     add_letter(" ")
   })
-  
+
   $('#keyboard .return').on('click', function(){
     $('#submit').click();
   })
-  
+
   $('#keyboard .hide').on('click', function(){
     $('#keyboard').animate({
       "bottom": $('#keyboard').innerHeight() * -1
@@ -200,17 +205,17 @@ $(document).ready(() => {
       reflow_list()
     });
   })
-  
+
   $('#keyboard .delete').on('click', function(){
     const val = $('#input').val()
     $('#input').val(val.substr(0, val.length - 1))
     $('#input').trigger($.Event("input"))
   })
-  
+
   $('#keyboard .refresh').on('click', function(){
     refresh_items()
   })
-  
+
   $('#keyboard .clear').on('click', function(){
     if(confirm("Clear all items?")){
       $.ajax({
@@ -226,19 +231,19 @@ $(document).ready(() => {
       })
     }
   })
-  
+
   $('#show-keyboard').on("click", function(){
     $(this).hide()
     $('#keyboard').animate({
       "bottom": 0
     }, reflow_list)
   })
-  
+
   if(navigator.userAgent.toLowerCase().indexOf("raspbian") >= 0){
     $("#keyboard").show()
     $("#banner").show()
   }else{
     $("#keyboard .hide").click()
   }
-  
+
 })
