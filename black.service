@@ -5,7 +5,7 @@ After=network.target
 [Service]
 WorkingDirectory=/home/ubuntu/digital-black
 Environment=PORT=3001
-Environment=DB_PATH=/home/ubuntu/digital-black/items.sql
+Environment=DB_PATH=/home/ubuntu/digital-black/items.sqlite
 Type=simple
 User=ubuntu
 ExecStart=/usr/bin/node server.js
