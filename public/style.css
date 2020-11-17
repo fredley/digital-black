@@ -171,6 +171,7 @@ div.item.hidden{
   padding-bottom:10px;
   background: #333;
   width:100%;
+  min-width:500px;
   left:0;
 }
 #keyboard li {
