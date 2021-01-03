@@ -138,7 +138,11 @@ const refresh_items = () => {
 }
 
 const check_recipe = () => {
-  $.get(`/recipe/?auth_key=${auth_key}`).done((data) => {
+  $.ajax({
+    url: `/recipe/?auth_key=${auth_key}`,
+    cache: false,
+    method: 'GET'
+  }).done((data) => {
     const response = JSON.parse(data)
     $.ajax({
       url: '/recipe/',
@@ -198,7 +202,7 @@ $(document).ready(() => {
   refresh_items()
   setInterval(refresh_items, 60000)
 
-  if(IS_PI || true){
+  if(IS_PI){
     check_recipe()
     setInterval(check_recipe, 5000)
   }
