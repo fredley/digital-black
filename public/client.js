@@ -1,3 +1,5 @@
+const IS_PI = navigator.userAgent.toLowerCase().indexOf("raspbian") >= 0
+
 let frequent_items = []
 let items = []
 
@@ -135,6 +137,46 @@ const refresh_items = () => {
   })
 }
 
+const check_recipe = () => {
+  $.get(`/recipe/?auth_key=${auth_key}`).done((data) => {
+    const response = JSON.parse(data)
+    $.ajax({
+      url: '/recipe/',
+      method: 'POST',
+      data: {
+        url: 'unset',
+        auth_key: auth_key
+      }
+    })
+    if (response.url !== 'None') {
+      const content = `
+      <div class="recipe">
+      <div class="closer">
+      <button><i class="fa fa-times"></i></button>
+      </div>
+      <iframe
+        is="x-frame-bypass"
+        width="${$(document).outerWidth()}"
+        height="${$(document).outerHeight() - 50}"
+        frameborder="0"
+        scrolling="yes"
+        marginheight="0"
+        marginwidth="0"
+        src="${response.url}">
+      </iframe>
+      </div>`
+      if ($('.recipe').length) {
+        $('.recipe').html(content)
+      } else {
+        $('main').prepend(content)
+      }
+    }
+    $('.closer button').on('click', () => {
+      $('.recipe').remove()
+    })
+  })
+}
+
 const reflow_list = () => {
   $('#listwrapper').css({
     "height": $('#keyboard').offset().top - $('#listwrapper').offset().top
@@ -155,6 +197,11 @@ $(document).ready(() => {
 
   refresh_items()
   setInterval(refresh_items, 60000)
+
+  if(IS_PI || true){
+    check_recipe()
+    setInterval(check_recipe, 5000)
+  }
 
   $('#input').on('keypress', (event) => {
     if ((event.keyCode ? event.keyCode : event.which) === 13){
@@ -239,7 +286,7 @@ $(document).ready(() => {
     }, reflow_list)
   })
 
-  if(navigator.userAgent.toLowerCase().indexOf("raspbian") >= 0){
+  if(IS_PI){
     $('#show-keyboard').click()
     $("#banner").show()
   }

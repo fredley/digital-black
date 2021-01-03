@@ -14,6 +14,8 @@ var bodyParser = require('body-parser');
 
 const AUTH_KEY = 'bevenden'
 
+let RECIPE_URL = null
+
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -92,6 +94,28 @@ app.post('/clear_item/:id/', function(request, response) {
   db.prepare("DELETE FROM items WHERE rowid=(?)").run(parseInt(request.params.id), function(){
     response.send('OK')
   }).finalize()
+});
+
+app.route('/recipe/').post(function(request, response) {
+  if(request.body.auth_key != AUTH_KEY){
+    response.send("authfail")
+    return
+  }
+  if (request.body.url === 'unset') {
+    RECIPE_URL = null
+  } else {
+    RECIPE_URL = request.body.url;
+  }
+}).get(function(request, response) {
+  if(request.query.auth_key != AUTH_KEY){
+    response.send("authfail")
+    return
+  }
+  response.send(JSON.stringify(
+    {
+      url: RECIPE_URL || "None"
+    }
+  ));
 });
 
 var listener = app.listen(process.env.PORT, function() {
