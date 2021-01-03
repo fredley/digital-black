@@ -3,11 +3,11 @@ Description=black
 After=network.target
 
 [Service]
-WorkingDirectory=/home/ubuntu/digital-black
+WorkingDirectory=/root/digital-black
 Environment=PORT=3001
-Environment=DB_PATH=/home/ubuntu/digital-black/items.sqlite
+Environment=DB_PATH=/root/digital-black/items.sqlite
 Type=simple
-User=ubuntu
+User=root
 ExecStart=/usr/bin/node server.js
 Restart=on-failure
 
