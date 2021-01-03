@@ -144,15 +144,15 @@ const check_recipe = () => {
     method: 'GET'
   }).done((data) => {
     const response = JSON.parse(data)
-    $.ajax({
-      url: '/recipe/',
-      method: 'POST',
-      data: {
-        url: 'unset',
-        auth_key: auth_key
-      }
-    })
     if (response.url !== 'None') {
+      $.ajax({
+        url: '/recipe/',
+        method: 'POST',
+        data: {
+          url: 'unset',
+          auth_key: auth_key
+        }
+      })
       const content = `
       <div class="recipe">
       <div class="closer">
