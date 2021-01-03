@@ -109,6 +109,7 @@ app.route('/recipe/').post(function(request, response) {
   } else {
     RECIPE_URL = request.body.url;
   }
+  response.send("ok")
 }).get(function(request, response) {
   if(request.query.auth_key != AUTH_KEY){
     response.send("authfail")
