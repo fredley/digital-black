@@ -53,13 +53,16 @@ app.post('/add_item/', function(request, response) {
     response.send("authfail")
     return
   }
+
+  const clean_name = request.body.name.trim().toLowerCase()
+
   db.prepare(`INSERT OR REPLACE INTO stats
   VALUES ($item,
     COALESCE(
       (SELECT count FROM stats
          WHERE item=$item),
-      0) + 1);`).run({$item: request.body.name}).finalize()
-  db.prepare("INSERT INTO items VALUES (?)").run(request.body.name, function(){
+      0) + 1);`).run({$item: clean_name}).finalize()
+  db.prepare("INSERT INTO items VALUES (?)").run(clean_name, function(){
     response.send('' + this.lastID)
   }).finalize()
 });
