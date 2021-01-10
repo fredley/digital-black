@@ -14,7 +14,7 @@ var db = new sqlite3.Database(dbFile);
 var bodyParser = require('body-parser');
 
 const AUTH_KEY = 'bevenden'
-const SPOON_KEY = ''
+const SPOON_KEY = 'SPOON_KEY'
 
 let RECIPE_URL = null
 
