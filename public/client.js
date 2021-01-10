@@ -153,7 +153,6 @@ let recipe_mode = 0
 let recipe_url
 
 const switch_recipe = () => {
-  console.trace();
   if (recipe_mode == 0) {
     $('.recipe iframe').hide()
     $('.recipe').append(`<div class="parsed">Loading...</div>`)

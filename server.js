@@ -58,6 +58,7 @@ app.post('/parse_recipe/', function(request, response) {
   const cacheKey = `cache/${request.body.url.replace(/\//g, '-')}.json`
   fs.readFile(cacheKey, "utf-8", (err, filecontents) => {
     if (err) {
+      console.log(`Fetching ${request.body.url} from Spoonacular`)
       const url = `https://api.spoonacular.com/recipes/extract?url=${request.body.url}&apiKey=${SPOON_KEY}`
       https.get(url, (resp) => {
         let data = ''
@@ -69,9 +70,14 @@ app.post('/parse_recipe/', function(request, response) {
 
         // The whole response has been received. Print out the result.
         resp.on('end', () => {
-          fs.writeFile(cacheKey, data, (err) => {
-            if (err) console.log(err)
-          })
+          response_code = JSON.parse(data).code
+          if (code !== 200) {
+            console.log(`Bad response: ${response_code}`)
+          } else {
+            fs.writeFile(cacheKey, data, (err) => {
+              if (err) console.log(err)
+            })
+          }
           response.send(data)
         })
 
