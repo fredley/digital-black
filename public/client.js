@@ -137,7 +137,9 @@ const refresh_items = () => {
 }
 
 const show_parsed_recipe = (data) => {
-  if(data.status === 200) {
+  if(data.status && data.status !== 200) {
+    $('.recipe .parsed').html(JSON.stringify(data))
+  } else {
     $('.recipe .parsed').html(`
     <h1>Ingredients</h1>
     <ul>
@@ -148,8 +150,6 @@ const show_parsed_recipe = (data) => {
     ${data.analyzedInstructions[0].steps.map(s => `<li>${s.step}</li>`).join('')}
     </ol>
     `)
-  } else {
-    $('.recipe .parsed').html(JSON.stringify(data))
   }
 }
 
