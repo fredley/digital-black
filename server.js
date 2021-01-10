@@ -55,11 +55,12 @@ app.post('/parse_recipe/', function(request, response) {
     response.send("authfail")
     return
   }
-  const cacheKey = `cache/${request.body.url.replace(/\//g, '-')}.json`
+  const url = request.body.url.replace(/\\\//g, '')
+  const cacheKey = `cache/${url.replace(/\//g, '-')}.json`
   fs.readFile(cacheKey, "utf-8", (err, filecontents) => {
     if (err) {
-      console.log(`Fetching ${request.body.url} from Spoonacular`)
-      const url = `https://api.spoonacular.com/recipes/extract?url=${request.body.url}&apiKey=${SPOON_KEY}`
+      console.log(`Fetching ${url} from Spoonacular`)
+      const url = `https://api.spoonacular.com/recipes/extract?url=${url}&apiKey=${SPOON_KEY}`
       https.get(url, (resp) => {
         let data = ''
 
