@@ -137,16 +137,20 @@ const refresh_items = () => {
 }
 
 const show_parsed_recipe = (data) => {
-  $('.recipe .parsed').html(`
-  <h1>Ingredients</h1>
-  <ul>
-  ${data.extendedIngredients.map(i => `<li>${i.originalString}</li>`).join('')}
-  </ul>
-  <h1>Method</h1>
-  <ol>
-  ${data.analyzedInstructions[0].steps.map(s => `<li>${s.step}</li>`).join('')}
-  </ol>
-  `)
+  if(data.status === 200) {
+    $('.recipe .parsed').html(`
+    <h1>Ingredients</h1>
+    <ul>
+    ${data.extendedIngredients.map(i => `<li>${i.originalString}</li>`).join('')}
+    </ul>
+    <h1>Method</h1>
+    <ol>
+    ${data.analyzedInstructions[0].steps.map(s => `<li>${s.step}</li>`).join('')}
+    </ol>
+    `)
+  } else {
+    $('.recipe .parsed').html(JSON.stringify(data))
+  }
 }
 
 let recipe_mode = 0
