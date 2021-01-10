@@ -97,7 +97,6 @@ const add_item = (name, cb) => {
         reflow_list()
         $('#input').val('')
         items.push({name: name})
-        console.log('reset frequ')
         reset_frequent()
         cb && cb()
       }
@@ -137,6 +136,48 @@ const refresh_items = () => {
   })
 }
 
+const show_parsed_recipe = (data) => {
+  $('.recipe .parsed').html(`
+  <h1>Ingredients</h1>
+  <ul>
+  ${data.extendedIngredients.map(i => `<li>${i.originalString}</li>`).join('')}
+  </ul>
+  <h1>Method</h1>
+  <ol>
+  ${data.analyzedInstructions[0].steps.map(s => `<li>${s.step}</li>`).join('')}
+  </ol>
+  `)
+}
+
+let recipe_mode = 0
+let recipe_url
+
+const switch_recipe = () => {
+  console.trace();
+  if (recipe_mode == 0) {
+    $('.recipe iframe').hide()
+    $('.recipe').append(`<div class="parsed">Loading...</div>`)
+    $.ajax({
+      url: `/parse_recipe/`,
+      method: 'POST',
+      data: {
+        url: recipe_url,
+        auth_key: auth_key
+      },
+      success: (data) => {
+        show_parsed_recipe(JSON.parse(data))
+        $('button.switcher').prop('disabled', false)
+      }
+    })
+    recipe_mode = 1
+  } else {
+    $('.recipe .parsed').remove()
+    $('.recipe iframe').show()
+    recipe_mode = 0
+    $('button.switcher').prop('disabled', false)
+  }
+}
+
 const check_recipe = () => {
   $.ajax({
     url: `/recipe/?auth_key=${auth_key}`,
@@ -144,6 +185,7 @@ const check_recipe = () => {
     method: 'GET'
   }).done((data) => {
     const response = JSON.parse(data)
+    recipe_mode = 0
     if (response.url !== 'None') {
       $.ajax({
         url: '/recipe/',
@@ -153,31 +195,37 @@ const check_recipe = () => {
           auth_key: auth_key
         }
       })
+      recipe_url = response.url
       const content = `
       <div class="recipe">
-      <div class="closer">
-      <button><i class="fa fa-times"></i></button>
-      </div>
-      <iframe
-        is="x-frame-bypass"
-        width="${$(document).outerWidth()}"
-        height="${$(document).outerHeight() - 50}"
-        frameborder="0"
-        scrolling="yes"
-        marginheight="0"
-        marginwidth="0"
-        src="${response.url}">
-      </iframe>
+        <div class="buttonbar">
+          <button class="switcher"><i class="far fa-file-alt"></i></button>
+          <button class="closer"><i class="fa fa-times"></i></button>
+        </div>
+        <iframe
+          is="x-frame-bypass"
+          width="${$(document).outerWidth()}"
+          height="${$(document).outerHeight() - 50}"
+          frameborder="0"
+          scrolling="yes"
+          marginheight="0"
+          marginwidth="0"
+          src="${response.url}">
+        </iframe>
       </div>`
       if ($('.recipe').length) {
         $('.recipe').html(content)
       } else {
         $('main').prepend(content)
+        $('button.switcher').on('click', function() {
+          $(this).prop('disabled', true)
+          switch_recipe()
+        })
+        $('button.closer').on('click', () => {
+          $('.recipe').remove()
+        })
       }
     }
-    $('.closer button').on('click', () => {
-      $('.recipe').remove()
-    })
   })
 }
 

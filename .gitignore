@@ -117,3 +117,5 @@ dist
 
 
 *.sqlite
+
+cache/*.json

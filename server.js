@@ -1,5 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+const https = require('https');
 
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -13,6 +14,7 @@ var db = new sqlite3.Database(dbFile);
 var bodyParser = require('body-parser');
 
 const AUTH_KEY = 'bevenden'
+const SPOON_KEY = ''
 
 let RECIPE_URL = null
 
@@ -47,6 +49,41 @@ app.get('/get_items/', function(request, response) {
     });
   });
 });
+
+app.post('/parse_recipe/', function(request, response) {
+  if(request.body.auth_key != AUTH_KEY){
+    response.send("authfail")
+    return
+  }
+  const cacheKey = `cache/${request.body.url.replaceAll('/', '-')}.json`
+  fs.readFile(cacheKey, "utf-8", (err, filecontents) => {
+    if (err) {
+      const url = `https://api.spoonacular.com/recipes/extract?url=${request.body.url}&apiKey=${SPOON_KEY}`
+      https.get(url, (resp) => {
+        let data = ''
+
+        // A chunk of data has been received.
+        resp.on('data', (chunk) => {
+          data += chunk
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+          fs.writeFile(cacheKey, data, (err) => {
+            if (err) console.log(err)
+          })
+          response.send(data)
+        })
+
+      }).on("error", (err) => {
+        response.status(500)
+        response.send("Error: " + err.message)
+      })
+    } else {
+      response.send(filecontents);
+    }
+  })
+})
 
 app.post('/add_item/', function(request, response) {
   if(request.body.auth_key != AUTH_KEY){

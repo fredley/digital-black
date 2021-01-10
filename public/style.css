@@ -256,27 +256,51 @@ div.item.hidden{
   right: 0;
   bottom: 0;
   z-index: 500;
+  background: #fff;
 }
 
-.recipe .closer {
+.recipe .buttonbar {
   height: 50px;
   width: 100%;
   background: #000;
 }
 
-.recipe .closer button {
+.recipe .buttonbar button {
   border: none;
   color: #fff;
   background: #000;
-  float: right;
   font-size: 40px;
   padding: 0;
   margin: 0;
   font-weight: bolder;
   padding-right: 35px;
+  padding-left: 35px;
+}
+
+.recipe button.switcher {
+  font-size: 35px;
+  padding-top: 5px;
+}
+
+.recipe button.closer {
+  float: right;
+  padding-top: 3px;
 }
 
 .recipe iframe {
   float: left;
   clear: both;
+}
+
+.recipe .parsed {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.recipe .parsed h1 {
+  margin-left: 1em;
+}
+
+.recipe .parsed li {
+  margin-bottom: 0.5em;
 }
