@@ -295,6 +295,7 @@ div.item.hidden{
 .recipe .parsed {
   height: 100%;
   overflow-y: scroll;
+  padding-right:1em;
 }
 
 .recipe .parsed h1 {
