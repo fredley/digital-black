@@ -55,7 +55,7 @@ app.post('/parse_recipe/', function(request, response) {
     response.send("authfail")
     return
   }
-  const recipeUrl = request.body.url.replace(/\\\//g, '')
+  const recipeUrl = request.body.url.replace(/\\\//g, '/')
   const cacheKey = `cache/${recipeUrl.replace(/\//g, '-')}.json`
   fs.readFile(cacheKey, "utf-8", (err, filecontents) => {
     if (err) {
