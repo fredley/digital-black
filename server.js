@@ -8,7 +8,7 @@ app.use(express.static('public'));
 
 var fs = require('fs');
 var dbFile = process.env.DB_PATH || 'items.sqlite';
-var exists = fs.existsSync(dbFile);
+var db_exists = fs.existsSync(dbFile);
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database(dbFile);
 var bodyParser = require('body-parser');
@@ -22,12 +22,19 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-db.serialize(function(){
-  if (!exists) {
-    db.run('CREATE TABLE items (item TEXT)');
-    db.run('CREATE TABLE stats (item TEXT UNIQUE, count INT)');
-  }
-});
+if (!db_exists) {
+  db.serialize(function(){
+      db.run('CREATE TABLE items (item TEXT)');
+      db.run('CREATE TABLE stats (item TEXT UNIQUE, count INT)');
+    });
+}
+
+if (!fs.existsSync('./cache/')){
+  fs.mkdirSync('./cache/');
+}
+if (!fs.existsSync('./cache/items')){
+  fs.mkdirSync('./cache/items');
+}
 
 app.get('/', function(request, response) {
   response.sendFile(__dirname + '/views/index.html');
@@ -48,6 +55,82 @@ app.get('/get_items/', function(request, response) {
       ));
     });
   });
+});
+
+const extractAisle = (s) => {
+  const doc = JSON.parse(s)
+  const results = doc.results
+  if (!results || results.length === 0) {
+    return 'unknown'
+  }
+  return results[0].aisle ? results[0].aisle.toLowerCase() : 'unknown'
+}
+
+const fetchAisle = (item) => {
+  return new Promise((resolve, reject) => {
+    const cacheKey = `cache/items/${item}.json`
+    fs.readFile(cacheKey, "utf-8", (err, filecontents) => {
+      if (err) {
+        console.log(`Fetching ingredient ${item} from Spoonacular`)
+        const spoonUrl = `https://api.spoonacular.com/food/ingredients/search?apiKey=${SPOON_KEY}&query=${item}&metaInformation=true`
+        https.get(spoonUrl, (resp) => {
+          let data = ''
+
+          // A chunk of data has been received.
+          resp.on('data', (chunk) => {
+            data += chunk
+          });
+
+          // The whole response has been received. Print out the result.
+          resp.on('end', () => {
+            response_code = JSON.parse(data).code
+            if (response_code && response_code !== 200) {
+              reject(`Bad response: ${response_code}`)
+            } else {
+              fs.writeFile(cacheKey, data, (err) => {
+                if (err) reject(err)
+              })
+              resolve([item, extractAisle(data)])
+            }
+          });
+        });
+      } else {
+        resolve([item, extractAisle(filecontents)])
+      }
+    });
+  })
+}
+
+app.get('/item_data/', async function(request, response) {
+  if(request.query.auth_key != AUTH_KEY){
+    response.send("authfail")
+    return
+  }
+
+  // Get detailed info for each item
+  db.all('SELECT rowid as id, item as name FROM items', async function(err, rows) {
+    const results = await Promise.all(rows.map(row => row.name).map(fetchAisle));
+    response.send(JSON.stringify(results));
+  });
+});
+
+app.post('/set_aisle/', function(request, response) {
+  if(request.body.auth_key != AUTH_KEY){
+    response.send("authfail")
+    return
+  }
+  const item = request.body.item;
+  const new_aisle = request.body.aisle;
+  const cacheKey = `cache/items/${item}.json`
+  const doc = {
+    results: [
+      {aisle: new_aisle}
+    ]
+  }
+  fs.writeFile(cacheKey, JSON.stringify(doc), (err) => {
+    if (err) console.log(err)
+    response.send("OK")
+  })
 });
 
 app.post('/parse_recipe/', function(request, response) {
@@ -109,6 +192,8 @@ app.post('/add_item/', function(request, response) {
   db.prepare("INSERT INTO items VALUES (?)").run(clean_name, function(){
     response.send('' + this.lastID)
   }).finalize()
+
+  fetchAisle(clean_name);
 });
 
 app.post('/clear_items/', function(request, response) {
