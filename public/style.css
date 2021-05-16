@@ -89,10 +89,20 @@ button:active {
 
 ul.aisle {
   padding: 0;
+  margin: 0;
+}
+
+ul.aisle li {
+  margin: 0;
 }
 
 li.title {
   cursor: pointer;
+  height: 56px;
+}
+
+li.item {
+  padding-left: 2rem;
 }
 
 li.title:before{

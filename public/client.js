@@ -296,6 +296,7 @@ const initShopping = () => {
           const aisle = el.attr("data-aisle")
           $('#input-edit').val(aisle)
           $('#editshade').show().find(".message").text(`Update the aisle for ${item}:`)
+          $('#input-edit').focus().select()
           $("#btn-edit").on("click", function() {
             $.ajax({
               url: '/set_aisle/',
