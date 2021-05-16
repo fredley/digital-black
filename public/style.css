@@ -97,7 +97,7 @@ li.title {
 
 li.title:before{
   content: "▼ ";
-  font-family: sans-serif;
+  font-family: Helvetica, sans-serif;
   color: #a7f542;
 
 }

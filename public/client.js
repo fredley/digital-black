@@ -3,6 +3,15 @@ const IS_PI = navigator.userAgent.toLowerCase().indexOf("linux arm") >= 0
 let frequent_items = []
 let items = []
 
+const AISLE_NAMES = {
+  'produce': 'veg',
+  'bakery/bread': 'bread',
+  'milk, eggs, other dairy': 'dairy',
+  'alcoholic beverages': 'alcohol',
+  'canned and jarred': 'cans',
+  'oil, vinegar, salad dressing': 'oil',
+}
+
 const get_id = (item) => {
   return items.find(o => o.name == item).id
 }
@@ -247,6 +256,12 @@ const reflow_list = () => {
   })
 }
 
+const parse_aisle = (s) => {
+  const translation = AISLE_NAMES[s]
+  let result = translation ? translation : s
+  return result.split(';')[0]
+}
+
 const initShopping = () => {
   $.ajax({
     url: '/item_data/?auth_key=' + auth_key,
@@ -255,10 +270,11 @@ const initShopping = () => {
       const results = JSON.parse(data)
       const aisles = {}
       results.forEach(item => {
-        if(aisles[item[1]]) {
-          aisles[item[1]].push(item[0])
+        const aisle = parse_aisle(item[1])
+        if(aisles[aisle]) {
+          aisles[aisle].push(item[0])
         } else {
-          aisles[item[1]] = [item[0]]
+          aisles[aisle] = [item[0]]
         }
       })
       Object.keys(aisles).forEach(aisle => {
