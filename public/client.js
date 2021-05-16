@@ -278,8 +278,11 @@ const initShopping = () => {
         }
       })
       Object.keys(aisles).forEach(aisle => {
-        const rows = aisles[aisle].map(row => `<li data-aisle="${aisle}" data-id="${get_id(row)}" class="item">${row}<button class='remove'><i class="fa fa-2x fa-check"></i></button></li>`)
-        $('#shopping').append($(`<ul class="aisle collapsed"><li class="title">${aisle}</li></ul>`).append(rows.join('')))
+        const rows = aisles[aisle].map(row => `
+        <li data-aisle="${aisle}" data-id="${get_id(row)}" class="item">
+        ${row}<button class='remove'><i class="fa fa-2x fa-check"></i></button>
+        </li>`)
+        $('#shopping').append($(`<ul class="aisle collapsed"><li class="title"><i class="fas fa-caret-right"></i> ${aisle}</li></ul>`).append(rows.join('')))
       })
 
       $(".aisle li.title").on("click", function() {

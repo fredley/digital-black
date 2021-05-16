@@ -105,15 +105,14 @@ li.item {
   padding-left: 2rem;
 }
 
-li.title:before{
-  content: "▼ ";
-  font-family: Helvetica, sans-serif;
+li.title i {
   color: #a7f542;
-
+  rotate: 90deg;
+  transition: rotate 0.1s ease-in-out;
 }
 
-.collapsed li.title:before{
-  content: "► ";
+.collapsed li.title i{
+  rotate: 0deg;
 }
 
 .collapsed > li.item {
