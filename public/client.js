@@ -368,6 +368,10 @@ $(document).ready(() => {
     $('#input').trigger($.Event("input"))
   }
 
+  $('#keyboard li').on("click mousedown mouseup focus blur keydown change mouseup click dblclick mousemove mouseover mouseout mousewheel keydown keyup keypress textInput touchstart touchmove touchend touchcancel resize scroll zoom focus blur select change submit reset",function(e){
+    $('#debug').append(`${e.type}<br>`)
+  });
+
   $('#keyboard .letter').on(CLICK_EVENT, function(){
     let char
     if ($(this).children().length){
