@@ -1,5 +1,5 @@
 const IS_PI = navigator.userAgent.toLowerCase().indexOf("linux arm") >= 0
-const CLICK_EVENT = 'touchstart'
+const KEYBOARD_CLICK_EVENT = 'touchstart'
 
 let frequent_items = []
 let items = []
@@ -44,7 +44,7 @@ const wire_remove = () => {
 }
 
 const wire_frequent = () => {
-  $('#frequent .item').on(CLICK_EVENT, function() {
+  $('#frequent .item').on("click", function() {
     const el = $(this)
     if(!press_timedout){
       add_item(el.text(), () => {
@@ -355,7 +355,7 @@ $(document).ready(() => {
     display_frequent_with_filter(value)
   })
 
-  $('#submit').on(CLICK_EVENT, () => {
+  $('#submit').on(KEYBOARD_CLICK_EVENT, () => {
     add_item($('#input').val())
   })
 
@@ -372,7 +372,7 @@ $(document).ready(() => {
   //   $('#debug').append(`${e.type}<br>`)
   // });
 
-  $('#keyboard .letter').on(CLICK_EVENT, function(){
+  $('#keyboard .letter').on(KEYBOARD_CLICK_EVENT, function(){
     let char
     if ($(this).children().length){
       char = $(this).children(":visible").text()
@@ -382,15 +382,15 @@ $(document).ready(() => {
     add_letter(char)
   })
 
-  $('#keyboard .space').on(CLICK_EVENT, function(){
+  $('#keyboard .space').on(KEYBOARD_CLICK_EVENT, function(){
     add_letter(" ")
   })
 
-  $('#keyboard .return').on(CLICK_EVENT, function(){
+  $('#keyboard .return').on(KEYBOARD_CLICK_EVENT, function(){
     $('#submit').click();
   })
 
-  $('#keyboard .hide').on(CLICK_EVENT, function(){
+  $('#keyboard .hide').on(KEYBOARD_CLICK_EVENT, function(){
     $('#keyboard').animate({
       "bottom": $('#keyboard').innerHeight() * -1
     }, () => {
@@ -399,17 +399,17 @@ $(document).ready(() => {
     });
   })
 
-  $('#keyboard .delete').on(CLICK_EVENT, function(){
+  $('#keyboard .delete').on(KEYBOARD_CLICK_EVENT, function(){
     const val = $('#input').val()
     $('#input').val(val.substr(0, val.length - 1))
     $('#input').trigger($.Event("input"))
   })
 
-  $('#keyboard .refresh').on(CLICK_EVENT, function(){
+  $('#keyboard .refresh').on(KEYBOARD_CLICK_EVENT, function(){
     location.reload()
   })
 
-  $('#keyboard .clear').on(CLICK_EVENT, function(){
+  $('#keyboard .clear').on(KEYBOARD_CLICK_EVENT, function(){
     if(confirm("Clear all items?")){
       $.ajax({
           url: '/clear_items/',
@@ -425,7 +425,7 @@ $(document).ready(() => {
     }
   })
 
-  $('#show-keyboard').on(CLICK_EVENT, function(){
+  $('#show-keyboard').on("click", function(){
     $(this).hide()
     $('#keyboard').animate({
       "bottom": 0
