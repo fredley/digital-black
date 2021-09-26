@@ -18,6 +18,10 @@ body {
   margin:0;
 }
 
+code {
+  color: white;
+}
+
 #top{
   position:fixed;
   top:0;
