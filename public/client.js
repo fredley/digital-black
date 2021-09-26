@@ -1,5 +1,5 @@
 const IS_PI = navigator.userAgent.toLowerCase().indexOf("linux arm") >= 0
-const CLICK_EVENT = 'click'
+const CLICK_EVENT = 'click dragstart'
 
 let frequent_items = []
 let items = []
