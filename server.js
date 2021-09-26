@@ -39,7 +39,7 @@ app.get('/get_items/', function(request, response) {
     return
   }
   db.all('SELECT rowid as id, item as name FROM items', function(err, rows) {
-    db.all('SELECT item as name FROM stats ORDER BY count DESC LIMIT 200', function(err, freq_rows) {
+    db.all('SELECT item as name FROM stats ORDER BY count DESC LIMIT 500', function(err, freq_rows) {
       response.send(JSON.stringify(
         {
           items: rows,
