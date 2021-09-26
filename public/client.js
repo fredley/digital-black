@@ -1,5 +1,5 @@
 const IS_PI = navigator.userAgent.toLowerCase().indexOf("linux arm") >= 0
-const CLICK_EVENT = 'click dragstart'
+const CLICK_EVENT = 'touchstart'
 
 let frequent_items = []
 let items = []
@@ -18,7 +18,7 @@ const get_id = (item) => {
 }
 
 const wire_remove = () => {
-  $('.remove').off().on(CLICK_EVENT, function(){
+  $('.remove').off().on("click", function(){
     const el = $(this).parent()
     const id = el.attr('data-id')
     const name = el.contents().get(0).nodeValue
@@ -368,9 +368,9 @@ $(document).ready(() => {
     $('#input').trigger($.Event("input"))
   }
 
-  $('#keyboard li').on("click mousedown mouseup focus blur keydown change mouseup click dblclick mousemove mouseover mouseout mousewheel keydown keyup keypress textInput touchstart touchmove touchend touchcancel resize scroll zoom focus blur select change submit reset",function(e){
-    $('#debug').append(`${e.type}<br>`)
-  });
+  // $('#keyboard li').on("click mousedown mouseup focus blur keydown change mouseup click dblclick mousemove mouseover mouseout mousewheel keydown keyup keypress textInput touchstart touchmove touchend touchcancel resize scroll zoom focus blur select change submit reset",function(e){
+  //   $('#debug').append(`${e.type}<br>`)
+  // });
 
   $('#keyboard .letter').on(CLICK_EVENT, function(){
     let char
