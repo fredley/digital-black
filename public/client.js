@@ -355,7 +355,7 @@ $(document).ready(() => {
     display_frequent_with_filter(value)
   })
 
-  $('#submit').on(KEYBOARD_CLICK_EVENT, () => {
+  $('#submit').on('click', () => {
     add_item($('#input').val())
   })
 
