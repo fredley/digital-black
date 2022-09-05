@@ -1,5 +1,4 @@
-const IS_PI = navigator.userAgent.toLowerCase().indexOf("linux arm") >= 0
-alert(navigator.userAgent)
+const IS_PI = navigator.userAgent.toLowerCase().indexOf("armv7") >= 0
 const KEYBOARD_CLICK_EVENT = 'touchstart'
 
 let frequent_items = []
