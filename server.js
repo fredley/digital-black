@@ -35,6 +35,10 @@ if (!db_exists) {
   });
 }
 
+app.get("/", function (request, response) {
+  response.sendFile(__dirname + "/public/index.html");
+});
+
 app.get("/get_items/", function (request, response) {
   if (request.query.auth_key != AUTH_KEY) {
     response.send("authfail");
