@@ -1,0 +1,463 @@
+@import url('https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap');
+
+
+
+* {
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  --theme-green: #a7f542;
+}
+
+html {
+  width:100%;
+}
+
+body {
+  font-family: 'Permanent Marker';
+  background: #000;
+  font-size: 16px;
+  width:100%;
+  margin:0;
+}
+
+code {
+  color: white;
+}
+
+.highlight {
+  color: var(--theme-green);
+}
+
+#top{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  z-index: 10;
+  background-color: #111;
+}
+
+.mainForm {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #333;
+  display: inline-block;
+  border-radius: 3px;
+}
+
+input {
+  display: block;
+  padding: 10px;
+  width: 90%;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+  background: #000;
+  color: #fff;
+  font-size: 16px;
+  float: left;
+  border-top-right-radius:0;
+  border-bottom-right-radius:0;
+  border-right:0;
+  height: 45px;
+}
+
+form button {
+  font-size: 16px;
+  border-radius: 3px;
+  background-color: #000;
+  color: #fff;
+  border: 1px solid lightgrey;
+  padding: 10px 10px 12px;
+  cursor: pointer;
+  display: block;
+  width: 10%;
+  border-top-left-radius:0;
+  border-bottom-left-radius:0;
+  font-family: 'Permanent Marker';
+  font-size: 150%;
+  line-height:18px;
+  color: var(--theme-green);
+  height: 45px;
+}
+
+button:hover {
+  background-color: #333;
+}
+
+button:active {
+  box-shadow: none;
+}
+
+.item, .title {
+  display: block;
+  color: #fff;
+  border-top: 1px solid #444;
+  padding: 10px;
+  margin-top: 10px;
+  position: relative;
+  font-size: 24px;
+  font-family: 'Permanent Marker';
+  user-select: none;
+}
+
+.item.faded {
+  opacity: 50%;
+}
+
+.aisle {
+  padding: 0;
+  margin: 0;
+}
+
+.aisle li {
+  margin: 0;
+}
+
+.aisle .title {
+  cursor: pointer;
+  height: 56px;
+}
+
+.aisle .item {
+  padding-left: 2rem;
+}
+
+.aisle .title i {
+  color: var(--theme-green);
+  rotate: 90deg;
+  transition: rotate 0.1s ease-in-out;
+}
+
+.collapsed .title i{
+  rotate: 0deg;
+}
+
+.collapsed > .item {
+  display: none;
+}
+
+.item:first {
+  border-top: none;
+}
+
+.item > button {
+  display: block;
+  position: absolute;
+  right: 20px;
+  top: 4px;
+  background: #000;
+  border:none;
+  color: var(--theme-green);
+  padding: 15px;
+  cursor: pointer;
+}
+
+.item.filtered,
+.item.hidden{
+  display:none;
+}
+
+#frequent {
+  margin-bottom: 10px;
+}
+
+#frequent > .item{
+  float: left;
+  border: 1px solid #333;
+  border-radius: 10px;
+  margin: 10px 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+  -webkit-touch-callout:none;
+  -webkit-user-select:none;
+  -khtml-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+#frequent > .item:hover {
+  background: #333;
+}
+
+#frequent > .item:before{
+  content: "+";
+  color: var(--theme-green);
+  margin-right: 5px;
+}
+
+#listwrapper{
+  margin-top:145px;
+  overflow-y: scroll;
+}
+
+#list {
+  overflow: show;
+}
+
+#frequent-wrapper{
+  width:100%;
+  overflow-x: scroll;
+  -ms-overflow-style: none; /* IE 11 */
+  scrollbar-width: none; /* Firefox 64 */
+}
+
+#frequent {
+  width: 10000px;
+}
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    height: 0;
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+
+.keyboardWrapper {
+  background: #333;
+  position: fixed;
+  width: 480px;
+  bottom:0;
+}
+
+.keyboardRow {
+  margin: 0;
+  padding: 10px;
+  list-style: none;
+  padding-bottom:10px;
+  width:100%;
+  min-width:482px;
+  user-select: none;
+  height: 38px;
+}
+.keyboardRow li {
+  float: left;
+  margin: 0 5px 5px 0;
+  width: 37px;
+  height: 33px;
+  line-height: 33px;
+  text-align: center;
+  background: #777;
+  border: 1px solid #888;
+  border-radius:5px;
+  color:#f8f8f8;
+  box-shadow: 0 2px 0 #000;
+}
+.keyboardRow.right li {
+  float:right;
+}
+.firstitem {
+  clear: left;
+}
+.keyboardRow li.a{
+  margin-left: 15px;
+}
+.keyboardRow li.return {
+  line-height:28px;
+  width: 63px;
+  font-family: 'Permanent Marker';
+  font-size: 150%;
+  color: var(--theme-green);
+  background: #000;
+}
+.keyboardRow .icon {
+  line-height:30px;
+}
+.keyboardRow .green {
+  background: #82916e;
+}
+.lastitem {
+  margin-right: 0;
+}
+.uppercase {
+  text-transform: uppercase;
+}
+.keyboardRow .space {
+  width: 373px;
+}
+.on {
+  display: none;
+}
+.keyboardRow li:hover {
+  position: relative;
+  top: 1px;
+  left: 1px;
+  border-color: #e5e5e5;
+  cursor: pointer;
+}
+#show-keyboard {
+  cursor: pointer;
+  display: block;
+  position: fixed;
+  bottom: 0;
+  right: 45%;
+  width: 37px;
+  height: 33px;
+  line-height: 33px;
+  text-align: center;
+  background: #999;
+  border: 1px solid #888;
+  border-top-right-radius:5px;
+  border-top-left-radius:5px;
+  color:#f8f8f8;
+}
+
+.recipe {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 500;
+  background: #fff;
+}
+
+.recipe .buttonbar {
+  height: 50px;
+  width: 100%;
+  background: #000;
+}
+
+.recipe .buttonbar button {
+  border: none;
+  color: #fff;
+  background: #000;
+  font-size: 40px;
+  padding: 0;
+  margin: 0;
+  font-weight: bolder;
+  padding-right: 35px;
+  padding-left: 35px;
+}
+
+.recipe button.switcher {
+  font-size: 35px;
+  padding-top: 5px;
+}
+
+.recipe button.closer {
+  float: right;
+  padding-top: 3px;
+}
+
+.recipe iframe {
+  float: left;
+  clear: both;
+}
+
+.recipe .parsed {
+  height: 100%;
+  overflow-y: scroll;
+  padding-right:1em;
+  width: 100%;
+}
+
+.recipe .parsed h1 {
+  margin-left: 1em;
+}
+
+.recipe .parsed li {
+  margin-bottom: 0.5em;
+}
+
+.shopping-mode {
+  position: fixed;
+  bottom: 0;
+  right: 50%;
+  left: 50%;
+  color: #fff;
+  font-size: 1.5rem;
+  background: #7db92e;
+  padding: 1rem;
+  border-top-left-radius: 5rem;
+  border-top-right-radius: 5rem;
+  text-shadow: 2px 2px 2px rgba(0,0,0,0.3);
+  cursor: pointer;
+  width: 4rem;
+  height: 4rem;
+  text-align: center;
+  line-height: 2.1rem;
+}
+
+.shade {
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  z-index: 99;
+  align-items: center;
+  justify-content: center;
+}
+
+.shade .modal {
+  background-color: #000;
+  padding: 15px;
+  border-radius: 15px;
+  color: white;
+  font-size: 150%;
+  border: 1px solid #555;
+}
+
+.shade .modal select {
+  display: block;
+  margin-top: 15px;
+  width: 100%;
+  background-color: #333;
+  border: 1px solid var(--theme-green);
+  border-radius: 15px;
+  color: var(--theme-green);
+  padding: 15px;
+}
+
+.shade .modal button {
+  display: block;
+  float: left;
+  margin-top: 15px;
+  width: calc(50% - 5px);
+  background-color: #000;
+  font-size: 100%;
+  border: 1px solid var(--theme-green);
+  border-radius: 15px;
+  color: var(--theme-green);
+}
+
+.shade .modal button:first-of-type {
+  margin-right: 5px;;
+}
+
+#edit {
+  position: fixed;
+  top: 40%;
+  margin: 0 auto;
+  width: 80%;
+  left: 10%;
+  background: #fff;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+#btn-edit {
+  display: block;
+  width: 100%;
+  font-size: 1rem;
+  background: #000;
+  border: 0;
+  border-radius: 1rem;
+  margin-top: 1rem;
+  color: var(--theme-green);
+  font-weight: bolder;
+  padding: 0.6rem;
+}
+
+#edit input {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+  background: #fff;
+  border: 3px solid #000;
+  border-radius: 1rem;
+  color: black;
+}
