@@ -4,7 +4,7 @@ npm run build
 cd ../..
 
 rm -rf public/*
-cp -r frontend/black/build public/
+cp -r frontend/black/build/* public/
 
 npm i
 sudo cp black.service /etc/systemd/system/black.service

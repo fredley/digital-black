@@ -7,7 +7,7 @@ export function ListItem({ children, item, handleRemoveItem, showPromoted }) {
 
   const performRemove = async (item) => {
     try {
-      await fetch(`http://localhost:3001/clear_item/${item.id}/`, {
+      await fetch(`/clear_item/${item.id}/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",

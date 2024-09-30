@@ -60,7 +60,7 @@ function App() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3001/get_items/?auth_key=${localStorage["password"]}`
+          `/get_items/?auth_key=${localStorage["password"]}`
         );
         const result = await response.json();
         setList(result.items);
@@ -76,7 +76,7 @@ function App() {
   const addItem = async (itemName) => {
     if (!itemName) return;
     try {
-      const response = await fetch(`http://localhost:3001/add_item/`, {
+      const response = await fetch(`/add_item/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -102,7 +102,7 @@ function App() {
   const handleClear = async () => {
     if (!window.confirm("Clear all items?")) return;
     try {
-      await fetch(`http://localhost:3001/clear_items/`, {
+      await fetch(`/clear_items/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",

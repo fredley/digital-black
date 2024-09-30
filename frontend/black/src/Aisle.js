@@ -48,7 +48,7 @@ export function Aisle({
   const updateAisle = async (item, aisle) => {
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:3001/set_aisle/`, {
+      const response = await fetch(`/set_aisle/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
