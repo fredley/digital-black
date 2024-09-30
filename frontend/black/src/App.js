@@ -34,7 +34,7 @@ export const SERVER =
 
 /* --- */
 
-const IS_PI = true || navigator.userAgent.toLowerCase().indexOf("armv7") >= 0;
+const IS_PI = navigator.userAgent.toLowerCase().indexOf("armv7") >= 0;
 
 const MODES = {
   LIST: "LIST",
