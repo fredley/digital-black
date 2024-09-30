@@ -202,6 +202,7 @@ button:active {
   overflow-x: scroll;
   -ms-overflow-style: none; /* IE 11 */
   scrollbar-width: none; /* Firefox 64 */
+  max-height: 65px;
 }
 
 #frequent {
