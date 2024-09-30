@@ -13,12 +13,12 @@
     "@fortawesome/free-regular-svg-icons": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
-    "body-parser": "^1.19.0",
+    "body-parser": "^1.20.0",
     "cors": "^2.8.5",
-    "express": "^4.16.3",
+    "express": "^4.19.2",
     "prettier": "^3.3.3",
     "sqlite": "^5.1.1",
-    "sqlite3": "https://github.com/mapbox/node-sqlite3/tarball/master"
+    "sqlite3": "^5.1.6"
   },
   "engines": {
     "node": "v22.5.1"

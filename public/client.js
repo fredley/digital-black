@@ -1,4 +1,4 @@
-const IS_PI = navigator.userAgent.toLowerCase().indexOf("linux arm") >= 0;
+const IS_PI = navigator.userAgent.toLowerCase().indexOf("armv7") >= 0;
 const KEYBOARD_CLICK_EVENT = "touchstart";
 
 let frequent_items = [];
@@ -406,7 +406,22 @@ $(document).ready(() => {
   //   $('#debug').append(`${e.type}<br>`)
   // });
 
+  let keyboard_timeout = 0;
+
+  const canClick = () => {
+    if (keyboard_timeout === 0) {
+      keyboard_timeout = setTimeout(() => {
+        keyboard_timeout = 0;
+      }, 100);
+      return true;
+    }
+    return false;
+  };
+
   $("#keyboard .letter").on(KEYBOARD_CLICK_EVENT, function () {
+    if (!canClick()) {
+      return;
+    }
     let char;
     if ($(this).children().length) {
       char = $(this).children(":visible").text();
@@ -417,14 +432,23 @@ $(document).ready(() => {
   });
 
   $("#keyboard .space").on(KEYBOARD_CLICK_EVENT, function () {
+    if (!canClick()) {
+      return;
+    }
     add_letter(" ");
   });
 
   $("#keyboard .return").on(KEYBOARD_CLICK_EVENT, function () {
+    if (!canClick()) {
+      return;
+    }
     $("#submit").click();
   });
 
   $("#keyboard .hide").on(KEYBOARD_CLICK_EVENT, function () {
+    if (!canClick()) {
+      return;
+    }
     $("#keyboard").animate(
       {
         bottom: $("#keyboard").innerHeight() * -1,
@@ -437,16 +461,25 @@ $(document).ready(() => {
   });
 
   $("#keyboard .delete").on(KEYBOARD_CLICK_EVENT, function () {
+    if (!canClick()) {
+      return;
+    }
     const val = $("#input").val();
     $("#input").val(val.substr(0, val.length - 1));
     $("#input").trigger($.Event("input"));
   });
 
   $("#keyboard .refresh").on(KEYBOARD_CLICK_EVENT, function () {
+    if (!canClick()) {
+      return;
+    }
     location.reload();
   });
 
   $("#keyboard .clear").on(KEYBOARD_CLICK_EVENT, function () {
+    if (!canClick()) {
+      return;
+    }
     if (confirm("Clear all items?")) {
       $.ajax({
         url: "/clear_items/",
