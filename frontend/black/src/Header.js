@@ -44,7 +44,12 @@ export function Header({ frequentItems, handleAddItem, item, setItem }) {
         <div id="frequent">
           {frequentItems &&
             frequentItems
-              .filter((i) => i.visible && i.name.indexOf(item) >= 0)
+              .filter((i) => {
+                return (
+                  i.visible &&
+                  i.name.toLowerCase().indexOf(item.toLowerCase()) >= 0
+                );
+              })
               .map((i) => (
                 <div
                   key={i.name}

@@ -7,7 +7,10 @@ export function ShoppingList({ items, handleRemoveItem, searchTerm }) {
       .map((i) => {
         return {
           ...i,
-          promoted: i.name.indexOf(searchTerm) >= 0 ? 1 : -1,
+          promoted:
+            i.name.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0
+              ? 1
+              : -1,
         };
       })
       .sort((a, b) => b.promoted - a.promoted);

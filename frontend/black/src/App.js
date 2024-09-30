@@ -27,9 +27,14 @@ while (hashCode(authKey) !== 1915171345) {
 }
 localStorage["password"] = authKey;
 
+export const SERVER =
+  !process.env.NODE_ENV || process.env.NODE_ENV === "development"
+    ? "http://localhost:3001"
+    : "";
+
 /* --- */
 
-const IS_PI = navigator.userAgent.toLowerCase().indexOf("armv7") >= 0;
+const IS_PI = true || navigator.userAgent.toLowerCase().indexOf("armv7") >= 0;
 
 const MODES = {
   LIST: "LIST",
@@ -60,7 +65,7 @@ function App() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `/get_items/?auth_key=${localStorage["password"]}`
+          `${SERVER}/get_items/?auth_key=${localStorage["password"]}`
         );
         const result = await response.json();
         setList(result.items);
@@ -76,7 +81,7 @@ function App() {
   const addItem = async (itemName) => {
     if (!itemName) return;
     try {
-      const response = await fetch(`/add_item/`, {
+      const response = await fetch(`${SERVER}/add_item/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -102,7 +107,7 @@ function App() {
   const handleClear = async () => {
     if (!window.confirm("Clear all items?")) return;
     try {
-      await fetch(`/clear_items/`, {
+      await fetch(`${SERVER}/clear_items/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",

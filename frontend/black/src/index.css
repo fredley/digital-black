@@ -216,6 +216,7 @@ button:active {
 
 .keyboardWrapper {
   background: #333;
+  font-family: "Benton Sans", "Helvetica Neue", helvetica, arial, sans-serif;
   position: fixed;
   width: 480px;
   bottom:0;

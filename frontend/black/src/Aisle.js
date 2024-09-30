@@ -6,6 +6,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ListItem } from "./ListItem";
+import { SERVER } from "./App";
 
 export function Aisle({
   active,
@@ -48,7 +49,7 @@ export function Aisle({
   const updateAisle = async (item, aisle) => {
     setLoading(true);
     try {
-      const response = await fetch(`/set_aisle/`, {
+      const response = await fetch(`${SERVER}/set_aisle/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",

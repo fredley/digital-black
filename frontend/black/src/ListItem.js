@@ -1,13 +1,14 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { SERVER } from "./App";
 
 export function ListItem({ children, item, handleRemoveItem, showPromoted }) {
   const [loading, setLoading] = React.useState(false);
 
   const performRemove = async (item) => {
     try {
-      await fetch(`/clear_item/${item.id}/`, {
+      await fetch(`${SERVER}/clear_item/${item.id}/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
