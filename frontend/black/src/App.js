@@ -29,7 +29,7 @@ localStorage["password"] = authKey;
 
 /* --- */
 
-const IS_PI = navigator.userAgent.toLowerCase().indexOf("linux arm") >= 0;
+const IS_PI = navigator.userAgent.toLowerCase().indexOf("armv7") >= 0;
 
 const MODES = {
   LIST: "LIST",
