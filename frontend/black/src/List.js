@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from "framer-motion";
 import { ListItem } from "./ListItem";
 
 export function ShoppingList({ items, handleRemoveItem, searchTerm }) {
@@ -19,17 +20,25 @@ export function ShoppingList({ items, handleRemoveItem, searchTerm }) {
   return (
     <div id="listwrapper">
       <div id="list">
-        {items &&
-          listItems.map((item) => (
-            <ListItem
-              showPromoted={!!searchTerm}
-              item={item}
-              handleRemoveItem={handleRemoveItem}
-              key={item.id}
-            >
-              {item.name}
-            </ListItem>
-          ))}
+        <AnimatePresence>
+          {items &&
+            listItems.map((item) => (
+              <motion.div
+                initial={{ height: 65 }}
+                animate={{ height: 65 }}
+                exit={{ height: 0 }}
+                key={item.id}
+              >
+                <ListItem
+                  showPromoted={!!searchTerm}
+                  item={item}
+                  handleRemoveItem={handleRemoveItem}
+                >
+                  {item.name}
+                </ListItem>
+              </motion.div>
+            ))}
+        </AnimatePresence>
       </div>
     </div>
   );

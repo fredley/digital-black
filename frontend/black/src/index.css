@@ -119,11 +119,11 @@ button:active {
   color: #fff;
   border-top: 1px solid #444;
   padding: 10px;
-  margin-top: 10px;
   position: relative;
   font-size: 24px;
   font-family: 'Permanent Marker';
   user-select: none;
+  background-color: #000;
 }
 
 .item.faded {
