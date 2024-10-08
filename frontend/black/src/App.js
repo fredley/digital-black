@@ -33,14 +33,13 @@ while (hashCode(authKey) !== 1915171345) {
 }
 localStorage["password"] = authKey;
 
-export const SERVER =
-  !process.env.NODE_ENV || process.env.NODE_ENV === "development"
-    ? "http://localhost:3001"
-    : "";
+const IS_DEV = !process.env.NODE_ENV || process.env.NODE_ENV === "development";
+
+export const SERVER = IS_DEV ? "http://localhost:3001" : "";
 
 /* --- */
 
-const IS_PI = navigator.userAgent.toLowerCase().indexOf("armv7") >= 0;
+const IS_PI = IS_DEV || navigator.userAgent.toLowerCase().indexOf("armv7") >= 0;
 
 const MODES = {
   LIST: "LIST",
@@ -176,7 +175,7 @@ function App() {
 
   return (
     <>
-      <main>
+      <main style={{ height: "100%" }}>
         {mode === MODES.LIST ? (
           <>
             <Header
@@ -185,19 +184,21 @@ function App() {
               item={item}
               setItem={setItem}
             />
-            <ShoppingList
-              items={list}
-              handleRemoveItem={handleRemoveItem}
-              searchTerm={item}
-            />
-            {IS_PI && (
-              <Keyboard
-                handleLetter={handleLetter}
-                handleBackspace={handleBackspace}
-                handleEnter={handleEnter}
-                handleClear={handleClear}
+            <div className="flex-wrapper">
+              <ShoppingList
+                items={list}
+                handleRemoveItem={handleRemoveItem}
+                searchTerm={item}
               />
-            )}
+              {IS_PI && (
+                <Keyboard
+                  handleLetter={handleLetter}
+                  handleBackspace={handleBackspace}
+                  handleEnter={handleEnter}
+                  handleClear={handleClear}
+                />
+              )}
+            </div>
           </>
         ) : (
           <AisleList
