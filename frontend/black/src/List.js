@@ -24,7 +24,7 @@ export function ShoppingList({ items, handleRemoveItem, searchTerm }) {
           {items &&
             listItems.map((item) => (
               <motion.div
-                initial={{ height: 65 }}
+                initial={{ height: 0 }}
                 animate={{ height: 65 }}
                 exit={{ height: 0 }}
                 key={item.id}
