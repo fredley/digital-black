@@ -39,7 +39,7 @@ export const SERVER = IS_DEV ? "http://localhost:3001" : "";
 
 /* --- */
 
-const IS_PI = IS_DEV || navigator.userAgent.toLowerCase().indexOf("armv7") >= 0;
+const IS_PI = navigator.userAgent.toLowerCase().indexOf("armv7") >= 0;
 
 const MODES = {
   LIST: "LIST",
@@ -175,7 +175,7 @@ function App() {
 
   return (
     <>
-      <main style={{ height: "100%" }}>
+      <main style={{ height: "100%" }} className={IS_PI ? "pi" : ""}>
         {mode === MODES.LIST ? (
           <>
             <Header

@@ -77,6 +77,10 @@ code {
   border-radius: 3px;
 }
 
+main.pi .mainForm {
+  width: 95%;
+}
+
 input {
   display: block;
   padding: 10px;
