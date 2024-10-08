@@ -24,6 +24,31 @@ code {
   color: white;
 }
 
+.main-loading, .error {
+  color: var(--theme-green);
+  position: fixed;
+  top: calc(50% - 30px);
+  left: calc(50% - 30px);
+  font-size: 60px;
+}
+
+.error {
+  left: initial;
+  text-align: center;
+  width: 100%;
+  font-size: 30px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.error button {
+  background-color: #000;
+  color: var(--theme-green);
+  border: 1px solid var(--theme-green);
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 100%;
+}
+
 .highlight {
   color: var(--theme-green);
 }

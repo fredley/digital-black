@@ -5,7 +5,13 @@ import { Header } from "./Header";
 import { ShoppingList } from "./List";
 import { Keyboard } from "./Keyboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faListCheck, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import {
+  faListCheck,
+  faShoppingCart,
+  faSpinner,
+  faSync,
+} from "@fortawesome/free-solid-svg-icons";
+import { useData } from "./utils";
 
 /* Authkey stuff */
 
@@ -41,42 +47,40 @@ const MODES = {
   SHOPPING: "SHOPPING",
 };
 
+export const ITEMS_URL = `${SERVER}/get_items/?auth_key=${localStorage["password"]}`;
+
 function App() {
   const [item, setItem] = React.useState("");
-  const [timer, setTimer] = React.useState("");
-  const [list, setList] = React.useState([]);
-  const [refresher, setRefresher] = React.useState("");
-  const [frequent, setFrequent] = React.useState([]);
   const [mode, setMode] = React.useState(MODES.LIST);
 
-  React.useEffect(() => {
-    if (timer) {
-      return;
-    }
+  const { list, frequent, isLoading, error, mutate } = useData();
 
-    setTimer(
-      setInterval(() => {
-        setRefresher(new Date().getUTCMilliseconds());
-      }, 1000 * 30)
+  if (isLoading) {
+    return (
+      <main>
+        <FontAwesomeIcon
+          icon={faSpinner}
+          size="2x"
+          pulse={true}
+          className="main-loading"
+        />
+      </main>
     );
-  }, [timer]);
+  } else if (error) {
+    return (
+      <main className="error">
+        <p>Error: {error} </p>
+        <button onClick={() => window.location.reload()}>
+          <FontAwesomeIcon icon={faSync} /> Reload
+        </button>
+      </main>
+    );
+  }
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `${SERVER}/get_items/?auth_key=${localStorage["password"]}`
-        );
-        const result = await response.json();
-        setList(result.items);
-        refreshFrequent(result.frequent, result.items);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [refresher]);
+  const itemNames = Object.values(list).map((i) => i.name);
+  const filteredFrequent = frequent.map((i) => {
+    return { name: i.name, visible: !itemNames.includes(i.name) };
+  });
 
   const addItem = async (itemName) => {
     if (!itemName) return;
@@ -96,8 +100,10 @@ function App() {
       }
       const newItem = data;
       const nextList = [...list, newItem];
-      setList(nextList);
-      refreshFrequent([...frequent], nextList);
+      mutate({
+        items: nextList,
+        frequent: frequent,
+      });
       setItem("");
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -114,27 +120,22 @@ function App() {
         },
         body: `auth_key=${localStorage["password"]}`,
       });
-      setList([]);
-      refreshFrequent([...frequent], []);
+      mutate({
+        items: [],
+        frequent: frequent,
+      });
       setItem("");
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
-  const refreshFrequent = (nextFrequent, nextList) => {
-    const itemNames = Object.values(nextList).map((i) => i.name);
-    setFrequent(
-      nextFrequent.map((i) => {
-        return { name: i.name, visible: !itemNames.includes(i.name) };
-      })
-    );
-  };
-
   const handleRemoveItem = function (removeItem) {
     const nextList = list.filter((item) => item.id !== removeItem.id);
-    setList(nextList);
-    refreshFrequent([...frequent], nextList);
+    mutate({
+      items: nextList,
+      frequent: frequent,
+    });
   };
 
   const handleLetter = function (l) {
@@ -167,7 +168,10 @@ function App() {
         }
       }),
     ];
-    setList(nextList);
+    mutate({
+      items: nextList,
+      frequent: frequent,
+    });
   };
 
   return (
@@ -176,7 +180,7 @@ function App() {
         {mode === MODES.LIST ? (
           <>
             <Header
-              frequentItems={frequent}
+              frequentItems={filteredFrequent}
               handleAddItem={addItem}
               item={item}
               setItem={setItem}
