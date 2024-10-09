@@ -56,11 +56,8 @@ code {
 }
 
 #top{
-  position:fixed;
-  top:0;
-  left:0;
   width:100%;
-  z-index: 10;
+  height: 137px;
   background-color: #111;
 }
 
@@ -70,7 +67,7 @@ code {
 
 .mainForm {
   width: 100%;
-  margin-bottom: 7px;
+  margin-bottom: 4px;
   padding: 10px;
   background-color: #333;
   display: inline-block;
@@ -78,7 +75,7 @@ code {
 }
 
 main.pi .mainForm {
-  width: 95%;
+  padding-right: 5%;
 }
 
 input {
@@ -193,10 +190,6 @@ button:active {
   display:none;
 }
 
-#frequent {
-  margin-bottom: 10px;
-}
-
 #frequent > .item{
   float: left;
   border: 1px solid #333;
@@ -230,18 +223,14 @@ button:active {
 }
 
 #listwrapper{
-  padding-top:145px;
   overflow-y: auto;
-  height: 145px;
   flex: 1 1 auto;
 }
 
 #frequent-wrapper{
   width:100%;
   overflow-x: scroll;
-  -ms-overflow-style: none; /* IE 11 */
-  scrollbar-width: none; /* Firefox 64 */
-  max-height: 65px;
+  scrollbar-width: none;
 }
 
 #frequent {
