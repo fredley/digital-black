@@ -223,6 +223,8 @@ button:active {
 }
 
 #listwrapper{
+  background-color: #000;
+  z-index: 0;
   overflow-y: auto;
   flex: 1 1 auto;
 }
@@ -234,7 +236,7 @@ button:active {
 }
 
 #frequent {
-  width: 10000px;
+  width: max-content;
 }
 ::-webkit-scrollbar {
     width: 0px;  /* remove scrollbar space */
